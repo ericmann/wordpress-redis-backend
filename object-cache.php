@@ -780,7 +780,7 @@ class WP_Object_Cache {
 	 * @param   null $persistent_id      To create an instance that persists between requests, use persistent_id to specify a unique ID for the instance.
 	 */
 	public function __construct() {
-		require_once 'predis/autoload.php';
+		require_once 'vendor/autoload.php';
 
 		$this->redis = new Predis\Client( '' );
 
