@@ -125,7 +125,7 @@ class WordPress_Redis_Backend {
 
 	public function validations(){
 
-		if( $this->isset_true( $_REQUEST['wrb-move-file'] )){
+		if( $this->request_key_true( 'wrb-move-file' ) ){
 			$force = $this->force_move();
 			if ( ! self::cache_file_exists() || $force ){
 				self::move_file( $force );
@@ -153,12 +153,12 @@ class WordPress_Redis_Backend {
 
 	}
 
-	public function force_move(){
-		return $this->isset_true( $_REQUEST['wrb-force'] );
+	public function request_key_true( $key ){
+		return array_key_exists( $key, $_REQUEST ) && $_REQUEST[ $key ];
 	}
 
-	public function isset_true( $var ){
-		return isset( $var ) && true == $var;
+	public function force_move(){
+		return $this->request_key_true( 'wrb-force' );
 	}
 
 	public static function admin_notice( $message, $class = 'updated' ){
@@ -166,7 +166,7 @@ class WordPress_Redis_Backend {
 			( ! is_multisite() && current_user_can( 'manage_options' ) )
 			|| ( is_multisite() && current_user_can( 'manage_network_options' ) )
 		){
-			new WP_Admin_Notice( $message, $class );
+			return new WP_Admin_Notice( $message, $class );
 		}
 	}
 }
