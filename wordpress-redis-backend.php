@@ -119,8 +119,8 @@ class WordPress_Redis_Backend {
 
 	public function validations(){
 
-		if( self::isset_true( $_REQUEST['wrb-move-file'] )){
-			$force = self::force_move();
+		if( $this->isset_true( $_REQUEST['wrb-move-file'] )){
+			$force = $this->force_move();
 			if ( ! self::cache_file_exists() || $force ){
 				self::move_file( $force );
 			}
@@ -147,11 +147,11 @@ class WordPress_Redis_Backend {
 
 	}
 
-	public static function force_move(){
-		return self::isset_true( $_REQUEST['wrb-force'] );
+	public function force_move(){
+		return $this->isset_true( $_REQUEST['wrb-force'] );
 	}
 
-	public static function isset_true( $var ){
+	public function isset_true( $var ){
 		return isset( $var ) && true == $var;
 	}
 
