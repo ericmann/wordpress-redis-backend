@@ -67,7 +67,7 @@ class WordPress_Redis_Backend {
 			if ( copy( $from, $to ) ) {
 				// Let's store a hash of the file so we can detect later if it's been
 				// changed or not.
-				update_option( 'wrb_file_hash', self::hash_cache_file() );
+				update_site_option( 'wrb_file_hash', self::hash_cache_file() );
 				self::$file_moved = true;
 			}
 		}
@@ -94,7 +94,7 @@ class WordPress_Redis_Backend {
 	}
 
 	public static function cache_file_not_modified(){
-		return ( get_option( 'wrb_file_hash', false ) == @self::hash_cache_file() );
+		return ( get_site_option( 'wrb_file_hash', false ) == @self::hash_cache_file() );
 	}
 
 	public static function hashes_match(){
@@ -113,7 +113,7 @@ class WordPress_Redis_Backend {
 		if( self::cache_file_not_modified() ){
 			unlink( self::content_object_cache() );
 		}
-		delete_option( 'wrb_file_hash' );
+		delete_site_option( 'wrb_file_hash' );
 
 	}
 
