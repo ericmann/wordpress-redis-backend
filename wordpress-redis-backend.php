@@ -94,7 +94,7 @@ class WordPress_Redis_Backend {
 	}
 
 	public static function cache_file_not_modified(){
-		return ( get_option( 'wrb_file_hash', false ) == self::hash_cache_file() );
+		return ( get_option( 'wrb_file_hash', false ) == @self::hash_cache_file() );
 	}
 
 	public static function hashes_match(){
