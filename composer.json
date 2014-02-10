@@ -1,0 +1,31 @@
+{
+  "name": "ericmann/wordpress-redis-backend",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0+",
+  "description": "A WordPress object cache that uses Redis for storage.",
+  "homepage": "https://github.com/ericmann/wordpress-redis-backend",
+  "authors": [
+    {
+      "name": "Eric Mann",
+      "email": "eric@eamann.com",
+      "homepage": "http://eamann.com"
+    }
+  ],
+  "keywords": [
+    "wordpress", "plugin", "redis", "object", "cache", "predis"
+  ],
+  "support": {
+    "issues": "https://github.com/ericmann/wordpress-redis-backend/issues"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/nathanielks/wordpress-admin-notice"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "predis/predis": ">=0.8.4",
+    "nathanielks/wp-admin-notice": ">=1.0.0"
+  }
+}

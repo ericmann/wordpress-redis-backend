@@ -1,1 +1,5 @@
 /.idea
+
+# Vendor (e.g. Composer)
+vendor/*
+!vendor/.gitkeep
