@@ -19,20 +19,8 @@
   },
   "repositories": [
     {
-      "type": "package",
-      "package": {
-        "name": "nathanielks/wp-admin-notice",
-        "version": "dev-master",
-        "type": "package",
-        "source": {
-          "type": "git",
-          "url": "https://gist.github.com/8910601.git",
-          "reference": "master"
-        },
-        "autoload": {
-          "psr-4": { "": "" }
-        }
-      }
+      "type": "vcs",
+      "url": "https://gist.github.com/8910601.git"
     }
   ],
   "require": {

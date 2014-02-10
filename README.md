@@ -7,9 +7,31 @@ A WordPress object cache backend that implements all available methods using Red
 * Eric Mann
 
 ## Installation
+### Composer
 1. Install and configure Redis. There is a good tutorial [here](http://www.saltwebsites.com/2012/install-redis-245-service-centos-6).
-2. Install the plugin by placing into the plugins directory and activating via the WP Admin Dashboard.
-3. By default, the script will connect to Redis at 127.0.0.1:6379.
+2) Include the following in your root composer.json
+```js
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ericmann/wordpress-redis-backend.git"
+        }
+    ],
+    "require": {
+        "ericmann/wordpress-redis-backend": "dev-master"
+    }
+}
+```
+
+( I recommend using Roots.io's [Bedrock](https://github.com/roots/bedrock) for site organization )
+
+### Manually
+1. Install and configure Redis. There is a good tutorial [here](http://www.saltwebsites.com/2012/install-redis-245-service-centos-6).
+2. Make sure Composer is installed. If it's not, [here's how to install](https://getcomposer.org/doc/00-intro.md#installation-nix) ( You'll need commandline access to your server )
+3. Install the plugin by placing into the plugins directory and then run `composer install` in the root of the plugin directory.
+4. Activate WordPress Redis Backend in the WordPress admin
+5. By default, the script will connect to Redis at 127.0.0.1:6379.
 
 ### Connecting to Redis ###
 
