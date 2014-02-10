@@ -130,7 +130,7 @@ class WordPress_Redis_Backend {
 			$url = self::current_uri() . '?wrb-move-file=true';
 			$message = '<strong>WordPress Redis Backend:</strong> File object-cache.php doesn\'t exist in the content directory. ';
 			$message .= '<a href="' . $url . '">Move the file</a>';
-			new WP_Admin_Notice( $message, 'error');
+			self::admin_notice( $message, 'error');
 		}
 
 		if( self::cache_file_exists() && ! self::hashes_match() ){
@@ -138,11 +138,11 @@ class WordPress_Redis_Backend {
 			$message = '<strong>WordPress Redis Backend:</strong> An object-cache.php file already exists in the content directory. ';
 			$message .= 'Would you like to overwrite? ';
 			$message .= '<a href="' . $url . '">Overwrite</a>';
-			new WP_Admin_Notice( $message, 'error');
+			self::admin_notice( $message, 'error');
 		}
 
 		if( self::$file_moved ){
-			new WP_Admin_Notice( '<strong>WordPress Redis Backend:</strong> File moved sucessfully' );
+			self::admin_notice( '<strong>WordPress Redis Backend:</strong> File moved sucessfully' );
 		}
 
 	}
@@ -153,5 +153,14 @@ class WordPress_Redis_Backend {
 
 	public static function isset_true( $var ){
 		return isset( $var ) && true == $var;
+	}
+
+	public static function admin_notice( $message, $class = 'updated' ){
+		if(
+			( ! is_multisite() && current_user_can( 'manage_options' ) )
+			|| ( is_multisite() && current_user_can( 'manage_network_options' ) )
+		){
+			new WP_Admin_Notice( $message, $class );
+		}
 	}
 }
