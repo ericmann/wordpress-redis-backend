@@ -27,8 +27,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require_once 'vendor/autoload.php';
-
 register_activation_hook( __FILE__, array( 'WordPress_Redis_Backend', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'WordPress_Redis_Backend', 'deactivate' ) );
 
@@ -43,6 +41,7 @@ class WordPress_Redis_Backend {
 	public static $file_moved = false;
 
 	private function __construct(){
+		$this->includes();
 		add_action( 'admin_init', array( $this, 'validations' ) );
 	}
 
@@ -110,11 +109,18 @@ class WordPress_Redis_Backend {
 
 		// If object-cache.php has changed at all, let's not change it
 		// in case another plugin or something has overwritten the file.
-		if( self::cache_file_not_modified() ){
+		if( self::cache_file_exists() && self::cache_file_not_modified() ){
 			unlink( self::content_object_cache() );
 		}
 		delete_site_option( 'wrb_file_hash' );
 
+	}
+
+	public function includes(){
+		$autoloader = dirname( __FILE__ ) . '/vendor/autoload.php';
+		if( file_exists( $autoloader ) ){
+			require_once $autoloader;
+		}
 	}
 
 	public function validations(){

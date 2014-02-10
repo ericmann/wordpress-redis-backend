@@ -790,7 +790,6 @@ class WP_Object_Cache {
 	 */
 	public function __construct() {
 
-		require_once 'vendor/autoload.php';
 		$this->redis = new Predis\Client( '' );
 
 		global $blog_id, $table_prefix;
