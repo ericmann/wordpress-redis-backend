@@ -3,8 +3,24 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2cbd08a98b3865b238f7745a7c7424ec",
+    "hash": "d1aed82cfd09d56e3397f82060dd55eb",
     "packages": [
+        {
+            "name": "nathanielks/wp-admin-notice",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://gist.github.com/8910601.git",
+                "reference": "master"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "": ""
+                }
+            },
+            "time": "2014-02-10 05:50:29"
+        },
         {
             "name": "predis/predis",
             "version": "v0.8.5",
@@ -60,9 +76,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "nathanielks/wp-admin-notice": 20
+    },
     "platform": {
         "php": ">=5.3.2"
     },
