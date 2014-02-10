@@ -13,6 +13,10 @@ A WordPress object cache backend that implements all available methods using Red
 ```js
 {
     "repositories": [
+	{
+	"type": "vcs",
+	"url": "https://github.com/nathanielks/wordpress-admin-notice"
+	},
         {
             "type": "vcs",
             "url": "https://github.com/ericmann/wordpress-redis-backend.git"
