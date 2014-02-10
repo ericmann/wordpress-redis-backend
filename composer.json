@@ -26,6 +26,6 @@
   "require": {
     "php": ">=5.3.2",
     "predis/predis": ">=0.8.4",
-    "nathanielks/wp-admin-notice": "dev-master"
+    "nathanielks/wp-admin-notice": ">=1.0.0"
   }
 }

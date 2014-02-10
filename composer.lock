@@ -3,23 +3,45 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d1aed82cfd09d56e3397f82060dd55eb",
+    "hash": "c1370bfddc0e70ceb55602a7e9adccf9",
     "packages": [
         {
             "name": "nathanielks/wp-admin-notice",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://gist.github.com/8910601.git",
-                "reference": "master"
+                "url": "https://github.com/nathanielks/wordpress-admin-notice.git",
+                "reference": "79b03b2d76cdf837674a65fabb888e5ab680c5ac"
             },
-            "type": "package",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nathanielks/wordpress-admin-notice/zipball/79b03b2d76cdf837674a65fabb888e5ab680c5ac",
+                "reference": "79b03b2d76cdf837674a65fabb888e5ab680c5ac",
+                "shasum": ""
+            },
+            "type": "library",
             "autoload": {
                 "psr-4": {
                     "": ""
                 }
             },
-            "time": "2014-02-10 08:10:49"
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Nathaniel Schweinberg",
+                    "email": "nathaniel@fightthecurrent.org",
+                    "homepage": "http://fightthecurrent.org"
+                }
+            ],
+            "description": "A simple class for displaying admin notices in the WordPress admin.",
+            "homepage": "https://gist.github.com/nathanielks/8910601.git",
+            "support": {
+                "source": "https://github.com/nathanielks/wordpress-admin-notice/tree/master",
+                "issues": "https://github.com/nathanielks/wordpress-admin-notice/issues"
+            },
+            "time": "2014-02-10 19:43:33"
         },
         {
             "name": "predis/predis",
