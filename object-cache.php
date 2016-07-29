@@ -450,6 +450,12 @@ class WP_Object_Cache {
 
 		// Save to Redis
 		$expiration = abs( intval( $expiration ) );
+		
+		// Default for Expiration
+		if ( ! $expiration ) {
+			$expiration = defined('WP_REDIS_DEFAULT_EXPIRATION') ? WP_REDIS_DEFAULT_EXPIRATION : null;
+		}
+		
 		if ( $expiration ) {
 			$result = $this->parse_predis_response( $this->redis->setex( $derived_key, $expiration, $value ) );
 		} else {
