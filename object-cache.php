@@ -22,6 +22,7 @@
  */
 function wp_cache_add( $key, $value, $group = '', $expiration = 0 ) {
 	global $wp_object_cache;
+	wp_inner_cache_unset($key, $group);
 	return $wp_object_cache->add( $key, $value, $group, $expiration );
 }
 
@@ -52,6 +53,7 @@ function wp_cache_close() {
  */
 function wp_cache_decr( $key, $offset = 1, $group = '' ) {
 	global $wp_object_cache;
+    wp_inner_cache_unset($key, $group);
 	return $wp_object_cache->decrement( $key, $offset, $group );
 }
 
@@ -68,6 +70,7 @@ function wp_cache_decr( $key, $offset = 1, $group = '' ) {
  */
 function wp_cache_delete( $key, $group = '', $time = 0 ) {
 	global $wp_object_cache;
+	wp_inner_cache_unset($key, $group);
 	return $wp_object_cache->delete( $key, $group, $time );
 }
 
@@ -82,6 +85,8 @@ function wp_cache_delete( $key, $group = '', $time = 0 ) {
  */
 function wp_cache_flush( $delay = 0 ) {
 	global $wp_object_cache;
+    global $wp_inner_cache;
+	$wp_inner_cache = [];
 	return $wp_object_cache->flush( $delay );
 }
 
@@ -99,7 +104,12 @@ function wp_cache_flush( $delay = 0 ) {
  */
 function wp_cache_get( $key, $group = '' ) {
 	global $wp_object_cache;
-	return $wp_object_cache->get( $key, $group );
+	$innerCache = wp_inner_cache_get($key, $group);
+	if ($innerCache === null) {
+	    $innerCache = wp_inner_cache_set($key, $wp_object_cache->get( $key, $group ), $group);
+    }
+
+    return $innerCache;
 }
 
 /**
@@ -135,6 +145,7 @@ function wp_cache_get_multi( $groups ) {
  */
 function wp_cache_incr( $key, $offset = 1, $group = '' ) {
 	global $wp_object_cache;
+    wp_inner_cache_unset($key, $group);
 	return $wp_object_cache->increment( $key, $offset, $group );
 }
 
@@ -146,8 +157,9 @@ function wp_cache_incr( $key, $offset = 1, $group = '' ) {
  * @return  void
  */
 function wp_cache_init() {
-	global $wp_object_cache;
+	global $wp_object_cache, $wp_inner_cache;
 	$wp_object_cache = new WP_Object_Cache();
+	$wp_inner_cache = [];
 }
 
 /**
@@ -167,6 +179,7 @@ function wp_cache_init() {
  */
 function wp_cache_replace( $key, $value, $group = '', $expiration = 0 ) {
 	global $wp_object_cache;
+    wp_inner_cache_unset($key, $group);
 	return $wp_object_cache->replace( $key, $value, $group, $expiration );
 }
 
@@ -186,6 +199,7 @@ function wp_cache_replace( $key, $value, $group = '', $expiration = 0 ) {
  */
 function wp_cache_set( $key, $value, $group = '', $expiration = 0 ) {
 	global $wp_object_cache;
+	wp_inner_cache_unset($key, $group);
 	return $wp_object_cache->set( $key, $value, $group, $expiration );
 }
 
@@ -215,7 +229,8 @@ function wp_cache_switch_to_blog( $_blog_id ) {
  * @return  void
  */
 function wp_cache_add_global_groups( $groups ) {
-	global $wp_object_cache;
+	global $wp_object_cache, $wp_inner_cache;
+    $wp_inner_cache = [];
 	$wp_object_cache->add_global_groups( $groups );
 }
 
@@ -231,6 +246,52 @@ function wp_cache_add_global_groups( $groups ) {
 function wp_cache_add_non_persistent_groups( $groups ) {
 	global $wp_object_cache;
 	$wp_object_cache->add_non_persistent_groups( $groups );
+}
+
+function wp_inner_cache_unset($key, $group) {
+    if (!defined('WP_INNER_CACHE') || !WP_INNER_CACHE) {
+        return null;
+    }
+    global $wp_inner_cache;
+    unset($wp_inner_cache[$group][$key]);
+}
+
+/**
+ * @param string $key
+ * @param string $value
+ * @param mixed $group
+ * @return mixed
+ */
+function wp_inner_cache_set($key, $value, $group) {
+    if (!defined('WP_INNER_CACHE') || !WP_INNER_CACHE) {
+        return $value;
+    }
+    global $wp_inner_cache;
+    if (!isset($wp_inner_cache[$group])) {
+        $wp_inner_cache[$group] = [];
+    }
+
+    $wp_inner_cache[$group][$key] = $value;
+    return $value;
+}
+
+/**
+ * @param $key
+ * @param $group
+ * @return mixed|null
+ */
+function wp_inner_cache_get($key, $group)
+{
+    if (!defined('WP_INNER_CACHE') || !WP_INNER_CACHE) {
+        return null;
+    }
+    global $wp_inner_cache;
+
+    if (isset($wp_inner_cache[$group][$key])) {
+        return $wp_inner_cache[$group][$key];
+    }
+
+    return null;
 }
 
 class WP_Object_Cache {
